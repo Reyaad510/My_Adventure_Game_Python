@@ -1,3 +1,4 @@
+from room import room
 
 
 class Character:
@@ -10,9 +11,23 @@ class Character:
 
 
 class Hero(Character):
-    def __init__(self, name, description, ultimate):
+    def __init__(self, name, description, ultimate, startRoom=None):
         super().__init__(name, description)
         self.ultimate = ultimate
+        self.curRoom = startRoom
+
+    def __str__(self):
+        return f'{self.curRoom}'
+
+    def tryDirection(self, d, curRoom):
+        attrib = d + '_to'
+
+        if hasattr(curRoom, attrib):
+            return getattr(curRoom, attrib)
+        else:
+            print("You cant go that way")
+
+        return curRoom
 
 
 class Villain(Character):
@@ -29,7 +44,7 @@ heroes = {
     'mage': Hero(
         'Vivi', 'A young mage that lives in Alexandria with his grandfather. He is humble, but his training in magic makes him a deadly opponent', 'Meteor'),
 
-    'thief': Hero('Zidane', 'A smart mouth thief that has the duty of kidnapping Princess Garnet along with his crew of bandit. His wits and charm saves him in the most unexpected situations', 'Backstab'),
+    'thief': Hero('Zidane', 'A smart mouth thief that has the duty of kidnapping Princess Garnet along with his crew of bandit. His wits and charm saves him in the most unexpected situations', 'Backstab', room['outside']),
 
     'healer': Hero('Garnet', 'The daughter of Queen Brahman, Garnet is the princess of Alexandria. She does not see eye to eye with her mother after her father passed after unusual circumstances and she wishes for more than anything to leave the life she has now for something more simple.', 'Healing Wind')
 }
