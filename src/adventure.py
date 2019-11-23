@@ -3,6 +3,7 @@ from character import boss
 from character import normal_enemy
 from room import room
 import time
+import os
 
 
 thief = heroes['thief']
@@ -36,8 +37,13 @@ while not start:
     user_input = input("\nCommannd: ").strip().lower().split()
 
     if len(user_input):
+        os.system('cls')
+        os.system('clear')
         opening()
         start = True
+
     else:
+        os.system('cls')
+        os.system('clear')
         opening()
         start = True
