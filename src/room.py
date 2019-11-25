@@ -13,6 +13,7 @@ class Room:
 room = {
     'outside':  Room("Outside of Alexandria Castle",
                      "North are the doors to the Castle protected by a guard."),
+    'castleDoors': Room("Caste Door", "At the caste door is one guard who is lazily standing there about to fall asleep. That is until he notices three figures moving towards him very fast"),
 
     'cfloor1':    Room("Castle Main Floor", """Very vast and big area filled with a multitude of light flowing from lamps. """),
 
@@ -24,7 +25,7 @@ room = {
 }
 
 room['outside'].north_to = room['cfloor1']
-room['outside'].n_to = room['cfloor1']
+room['outside'].n_to = room['castleDoors']
 room['cfloor1'].south_to = room['outside']
 room['cfloor1'].s_to = room['outside']
 room['cfloor1'].north_to = room['cfloor2']

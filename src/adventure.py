@@ -4,9 +4,17 @@ from character import normal_enemy
 from room import room
 import time
 import os
+import sys
 
 
 thief = heroes['thief']
+
+
+def delay_print(s):
+    for c in s:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        # time.sleep(0.05)
 
 
 def opening():
@@ -14,8 +22,8 @@ def opening():
     done = False
 
     while not done:
-        print(f'\n{thief.curRoom.name}\n')
-        print(f'{thief.curRoom.description}')
+        delay_print(f'\nLocation: {thief.curRoom.name}\n')
+        delay_print(f'\n{thief.curRoom.description}')
 
         user_input = input("\nCommannd: ").strip().lower().split()
 
@@ -30,20 +38,63 @@ def opening():
             thief.curRoom = thief.tryDirection(user_input[0], thief.curRoom)
 
 
+def opening_dialogue():
+
+    done = False
+
+    while not done:
+        delay_print(f'\nLocation: {thief.curRoom.name}\n')
+        delay_print(f'\n{thief.curRoom.description}\n')
+        delay_print(
+            f'\nWedge: Crap! Crap! There is a guard right there! There is no way we can kidnap the princess!\n')
+        delay_print(
+            f'\nZanbar: WEDGE if you dont stop this at once i will take out my dagger and end you myself!\n')
+        delay_print(
+            f'\n{thief.name}: Haha! Wedge there is no need to worry. Think about it. There are 3 of us and only one guard So what does that mean for us?\n')
+        delay_print(f'\nWedge: Oh god no! That means we are triple dead??\n')
+        delay_print(
+            f'\nZanbar: WEDGE you imbeccile. Taste the fury of my Dagger Of A Thousand Stabs!\n')
+        delay_print(f'\n{thief.name}: No need for that Zanbar. Wedge will grow out of it i assure you. For now follow my lead and trust me when I say this mission will be a success! Lets go take out that guard!\n')
+
+        done = True
+
+        command = False
+
+        while not command:
+
+            user_input = input("\nCommannd: ").strip().lower().split()
+
+            if len(user_input) != 1:
+                print('Lets go north to fight those guards! Type n or north!')
+                continue
+
+            if user_input[0] == 'quit' or user_input[0] == 'q':
+                command = True
+            elif user_input[0] in ["n", "north"]:
+                thief.curRoom = thief.tryDirection(
+                    user_input[0], thief.curRoom)
+                command = True
+                os.system('cls')
+                os.system('clear')
+                opening()
+
+
 start = False
 
 while not start:
-    print('Welcome to my adventure game. You are starting as a thief! Have fun! Press enter to start!')
+    print('\nWelcome to my adventure game. You are starting as a thief! Have fun! Press enter to start!')
     user_input = input("\nCommannd: ").strip().lower().split()
 
     if len(user_input):
+        time.sleep(0.1)
         os.system('cls')
         os.system('clear')
-        opening()
+        opening_dialogue()
         start = True
 
     else:
+        time.sleep(0.1)
         os.system('cls')
         os.system('clear')
-        opening()
+        opening_dialogue()
         start = True
