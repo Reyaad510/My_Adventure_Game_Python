@@ -5,16 +5,81 @@ from room import room
 import time
 import os
 import sys
+import random
 
 
 thief = heroes['thief']
+guard = normal_enemy['normal_guard']
 
 
+# Used to show letter by letter in terminal
+# Comment out time.sleep for testing
 def delay_print(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        time.sleep(0.04)
+        # time.sleep(0.04)
+
+
+def win():
+    delay_print('\nYou won the battle!\n')
+
+
+def lose():
+    delay_print("You died. Game over!")
+
+
+def attack(hero, enemy, done):
+    os.system('cls')
+    os.system('clear')
+    delay_print(
+        f'{hero.name} attacks the {enemy.name} for {hero.attack} damage!\n')
+    enemy.health -= hero.attack
+
+    if enemy.health <= 0:
+        win()
+        done = True
+        opening()
+
+    else:
+        delay_print(
+            f'\n{enemy.name} attack {hero.name} for {enemy.attack} damage\n')
+        hero.health -= enemy.attack
+    if hero.health <= 0:
+        lose()
+        done = True
+    else:
+        combat(hero, enemy)
+
+
+def skills(hero, enemey):
+    os.system('cls')
+    os.system('clear')
+    print('I use my skill')
+
+
+def combat(hero, enemy):
+
+    combat_done = False
+
+    while not combat_done:
+        delay_print(f'\n{hero.name} vs {enemy.name}\n')
+        delay_print(
+            f'Zidane HP: {hero.health}     Normal Guard: {enemy.health}')
+        print("\n1. Attack")
+        print("2. Skills")
+
+        user_input = input("\nCommannd: ").strip().lower().split()
+
+        if len(user_input) != 1:
+            print('Press 1 or 2 to attack or us a skill!')
+            continue
+
+        if user_input[0] == '1':
+            attack(hero, enemy, done=combat_done)
+
+        elif user_input[0] == '2':
+            skills(hero, enemy)
 
 
 def opening():
@@ -37,6 +102,12 @@ def opening():
         elif user_input[0] in ["n", "north", "s", "south", "w", "west", "e", "east"]:
             thief.curRoom = thief.tryDirection(user_input[0], thief.curRoom)
 
+        elif user_input[0] == 'fight':
+            done = True
+            os.system('cls')
+            os.system('clear')
+            combat(thief, guard)
+
 
 def opening_dialogue():
 
@@ -45,6 +116,7 @@ def opening_dialogue():
     while not done:
         delay_print(f'\nLocation: {thief.curRoom.name}\n')
         delay_print(f'\n{thief.curRoom.description}\n')
+
         delay_print(
             f'\nWedge: Crap! Crap! There is a guard right there! There is no way we can kidnap the princess!\n')
         delay_print(
