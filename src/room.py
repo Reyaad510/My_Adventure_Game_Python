@@ -24,8 +24,9 @@ room = {
     'secretPassage': Room("Secret Passage", """A secret passage that connects the throneroom and the castle main floor."""),
 }
 
-room['outside'].north_to = room['cfloor1']
+room['outside'].north_to = room['castleDoors']
 room['outside'].n_to = room['castleDoors']
+
 room['cfloor1'].south_to = room['outside']
 room['cfloor1'].s_to = room['outside']
 room['cfloor1'].north_to = room['cfloor2']

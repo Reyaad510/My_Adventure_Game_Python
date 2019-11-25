@@ -14,7 +14,7 @@ def delay_print(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        # time.sleep(0.05)
+        time.sleep(0.04)
 
 
 def opening():
@@ -78,11 +78,14 @@ def opening_dialogue():
                 os.system('clear')
                 opening()
 
+            else:
+                print('Lets go north to fight those guards! Type n or north!')
+
 
 start = False
 
 while not start:
-    print('\nWelcome to my adventure game. You are starting as a thief! Have fun! Press enter to start!')
+    delay_print('\nWelcome you are playing as Zidane, part of a thieves guild. You are currently with two other members, Wedge and Zanbar, outside of the castle of Alexandria. You are on a dangerous mission...I wont spoil much more. Have fun! Press enter in the terminal to begin your adventure!')
     user_input = input("\nCommannd: ").strip().lower().split()
 
     if len(user_input):
