@@ -45,6 +45,8 @@ def win():
 
 def lose():
     delay_print("You died. Game over!")
+    input("\n> ").strip().lower().split()
+    sys.exit()
 
 
 def attack(hero, enemy, done):
@@ -55,7 +57,6 @@ def attack(hero, enemy, done):
 
     if enemy.health <= 0:
         win()
-        done = True
         opening()
 
     else:
@@ -64,7 +65,6 @@ def attack(hero, enemy, done):
         hero.health -= enemy.attack
     if hero.health <= 0:
         lose()
-        done = True
     else:
         combat(hero, enemy)
 
@@ -111,7 +111,6 @@ def skills(hero, enemy):
 
         if hero.health <= 0:
             lose()
-            skill_done = True
         else:
             combat(hero, enemy)
 
