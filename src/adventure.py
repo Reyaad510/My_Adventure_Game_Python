@@ -19,15 +19,28 @@ def delay_print(s):
         sys.stdout.write(c)
         sys.stdout.flush()
         # time.sleep(0.04)
+        # time.sleep(0.01)
+
+# Clearing the user terminal
 
 
 def clear():
     os.system('cls')
     os.system('clear')
 
+# Prints the player location and description of room
+
+
+def print_location(thief):
+    print('\n' + ('#' * (4 + len(thief.curRoom.name))))
+    print('# ' + thief.curRoom.name.upper() + ' #')
+    print(('#' * (4 + len(thief.curRoom.name)) + '\n'))
+    delay_print('\n -- ' + thief.curRoom.description + ' --\n')
+
 
 def win():
     delay_print('\nYou won the battle!\n')
+    input("\n> ").strip().lower().split()
 
 
 def lose():
@@ -63,24 +76,43 @@ def skills(hero, enemy):
 
     while not skill_done:
         delay_print('Choose a Skill: \n')
-        for i, skill in enumerate(hero.skills):
+        for i, skill in enumerate(d['name'] for d in hero.skills):
             delay_print(f'\n {i+1}. {skill}')
 
-        user_input = input("\nCommannd:").strip().lower().split()
+        user_input = input("\n> ").strip().lower().split()
 
         if len(user_input) != 1:
             print('Press a number to use a skill!')
             continue
 
-        if user_input[0] == '1':
+        # Whatever number user presses will dynamically find the description for that move
+        if user_input[0] in ['1', '2']:
             clear()
-            print(f'{hero.name} used {hero.skills[0]}')
+            delay_print(hero.skills[int(user_input[0]) - 1]['description'])
+            print('\n')
+            skill_damage = hero.skills[int(user_input[0]) - 1]['dmg']
+            delay_print(f'{hero.name} did {skill_damage} damage!\n')
+            print('\n')
+            enemy.health -= skill_damage
+
+        else:
+            delay_print('Press a number to use a skill!')
+            continue
+
+        if enemy.health <= 0:
+            win()
             skill_done = True
-            combat(hero, enemy)
-        if user_input[0] == '2':
-            clear()
-            print(f'{hero.name} used {hero.skills[1]}')
+            opening()
+
+        else:
+            delay_print(
+                f'\n{enemy.name} attack {hero.name} for {enemy.attack} damage\n')
+            hero.health -= enemy.attack
+
+        if hero.health <= 0:
+            lose()
             skill_done = True
+        else:
             combat(hero, enemy)
 
 
@@ -91,12 +123,14 @@ def combat(hero, enemy):
     while not combat_done:
         delay_print(f'\n{hero.name} vs {enemy.name}\n')
         delay_print(
-            f'Zidane HP: {hero.health}     Normal Guard: {enemy.health}\n')
+            f'Zidane HP: {hero.health}     Normal Guard HP: {enemy.health}\n')
+        delay_print(
+            f'Zidane MP: {hero.mp}      Normal Guard MP: {enemy.mp}\n')
         print("\n1. Attack")
         print("2. Skills")
         print("3. Items")
 
-        user_input = input("\nCommannd: ").strip().lower().split()
+        user_input = input("\n> ").strip().lower().split()
 
         if len(user_input) != 1:
             print('Press 1 or 2 to attack or us a skill!')
@@ -111,14 +145,13 @@ def combat(hero, enemy):
 
 
 def opening():
-
+    clear()
     done = False
 
     while not done:
-        delay_print(f'\nLocation: {thief.curRoom.name}\n')
-        delay_print(f'\n{thief.curRoom.description}')
+        print_location(thief)
 
-        user_input = input("\nCommannd: ").strip().lower().split()
+        user_input = input("\n> ").strip().lower().split()
 
         if len(user_input) != 1:
             print('I dont understand that. Type n,s,w, or e')
@@ -137,13 +170,12 @@ def opening():
 
 
 def opening_dialogue():
-
+    clear()
     done = False
 
     while not done:
-        delay_print(f'\nLocation: {thief.curRoom.name}\n')
-        delay_print(f'\n{thief.curRoom.description}\n')
-
+        print_location(thief)
+        print('============================================================================================')
         delay_print(
             f'\nWedge: Crap! Crap! There is a guard right there! There is no way we can kidnap the princess!\n')
         delay_print(
@@ -161,7 +193,7 @@ def opening_dialogue():
 
         while not command:
 
-            user_input = input("\nCommannd: ").strip().lower().split()
+            user_input = input("\n> ").strip().lower().split()
 
             if len(user_input) != 1:
                 print('Lets go north to fight those guards! Type n or north!')
@@ -184,14 +216,6 @@ start = False
 
 while not start:
     delay_print('\nWelcome you are playing as Zidane, part of a thieves guild. You are currently with two other members, Wedge and Zanbar, outside of the castle of Alexandria. You are on a dangerous mission...I wont spoil much more. Have fun! Press enter in the terminal to begin your adventure!')
-    user_input = input("\nCommannd: ").strip().lower().split()
-
-    if len(user_input):
-        clear()
-        opening_dialogue()
-        start = True
-
-    else:
-        clear()
-        opening_dialogue()
-        start = True
+    user_input = input("\n> ").strip().lower().split()
+    start = True
+    opening_dialogue()
