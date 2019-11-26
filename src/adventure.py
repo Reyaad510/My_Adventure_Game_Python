@@ -21,6 +21,11 @@ def delay_print(s):
         # time.sleep(0.04)
 
 
+def clear():
+    os.system('cls')
+    os.system('clear')
+
+
 def win():
     delay_print('\nYou won the battle!\n')
 
@@ -30,8 +35,7 @@ def lose():
 
 
 def attack(hero, enemy, done):
-    os.system('cls')
-    os.system('clear')
+    clear()
     delay_print(
         f'{hero.name} attacks the {enemy.name} for {hero.attack} damage!\n')
     enemy.health -= hero.attack
@@ -52,10 +56,32 @@ def attack(hero, enemy, done):
         combat(hero, enemy)
 
 
-def skills(hero, enemey):
-    os.system('cls')
-    os.system('clear')
-    print('I use my skill')
+def skills(hero, enemy):
+    clear()
+
+    skill_done = False
+
+    while not skill_done:
+        delay_print('Choose a Skill: \n')
+        for i, skill in enumerate(hero.skills):
+            delay_print(f'\n {i+1}. {skill}')
+
+        user_input = input("\nCommannd:").strip().lower().split()
+
+        if len(user_input) != 1:
+            print('Press a number to use a skill!')
+            continue
+
+        if user_input[0] == '1':
+            clear()
+            print(f'{hero.name} used {hero.skills[0]}')
+            skill_done = True
+            combat(hero, enemy)
+        if user_input[0] == '2':
+            clear()
+            print(f'{hero.name} used {hero.skills[1]}')
+            skill_done = True
+            combat(hero, enemy)
 
 
 def combat(hero, enemy):
@@ -65,9 +91,10 @@ def combat(hero, enemy):
     while not combat_done:
         delay_print(f'\n{hero.name} vs {enemy.name}\n')
         delay_print(
-            f'Zidane HP: {hero.health}     Normal Guard: {enemy.health}')
+            f'Zidane HP: {hero.health}     Normal Guard: {enemy.health}\n')
         print("\n1. Attack")
         print("2. Skills")
+        print("3. Items")
 
         user_input = input("\nCommannd: ").strip().lower().split()
 
@@ -79,6 +106,7 @@ def combat(hero, enemy):
             attack(hero, enemy, done=combat_done)
 
         elif user_input[0] == '2':
+            combat_done = True
             skills(hero, enemy)
 
 
@@ -104,8 +132,7 @@ def opening():
 
         elif user_input[0] == 'fight':
             done = True
-            os.system('cls')
-            os.system('clear')
+            clear()
             combat(thief, guard)
 
 
@@ -146,8 +173,7 @@ def opening_dialogue():
                 thief.curRoom = thief.tryDirection(
                     user_input[0], thief.curRoom)
                 command = True
-                os.system('cls')
-                os.system('clear')
+                clear()
                 opening()
 
             else:
@@ -161,15 +187,11 @@ while not start:
     user_input = input("\nCommannd: ").strip().lower().split()
 
     if len(user_input):
-        time.sleep(0.1)
-        os.system('cls')
-        os.system('clear')
+        clear()
         opening_dialogue()
         start = True
 
     else:
-        time.sleep(0.1)
-        os.system('cls')
-        os.system('clear')
+        clear()
         opening_dialogue()
         start = True
