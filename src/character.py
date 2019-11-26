@@ -53,11 +53,13 @@ heroes = {
     'thief': Hero('Zidane', 'A smart mouth thief that has the duty of kidnapping Princess Garnet along with his crew of bandit. His wits and charm saves him in the most unexpected situations', 100, 100, 10, 10, [{
         'name': 'Sneak Attack',
         'description': 'I sneak behind and stab them to death',
-        'dmg': 100
+        'dmg': 100,
+        'mp_cost': 5
     },
         {'name': 'Charm Attack',
             'description': 'I charm them',
-            'dmg': 20
+            'dmg': 5,
+            'mp_cost': 3
          }], 'Backstab', room['outside']),
 
     'healer': Hero('Garnet', 'The daughter of Queen Brahman, Garnet is the princess of Alexandria. She does not see eye to eye with her mother after her father passed after unusual circumstances and she wishes for more than anything to leave the life she has now for something more simple.', 100, 100, 10, 10, ['Cure', 'Barrier'], 'Healing Wind')

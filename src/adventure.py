@@ -38,6 +38,12 @@ def print_location(thief):
     delay_print('\n -- ' + thief.curRoom.description + ' --\n')
 
 
+def combat_vs(hero, enemy):
+    print(('=' * (4 + len(hero.name) + len(enemy.name))))
+    print(f'{hero.name} vs {enemy.name}')
+    print(('=' * (4 + len(hero.name) + len(enemy.name))))
+
+
 def win():
     delay_print('\nYou won the battle!\n')
     input("\n> ").strip().lower().split()
@@ -70,33 +76,41 @@ def attack(hero, enemy, done):
 
 
 def skills(hero, enemy):
-    clear()
 
     skill_done = False
 
     while not skill_done:
-        delay_print('Choose a Skill: \n')
-        for i, skill in enumerate(d['name'] for d in hero.skills):
-            delay_print(f'\n {i+1}. {skill}')
+        delay_print('\nChoose a Skill: \n')
+        for i, skill in enumerate(d for d in hero.skills):
+            print(i+1, skill['name'], '-', skill['mp_cost'], 'MP')
+        delay_print(f'9. Back')
 
         user_input = input("\n> ").strip().lower().split()
 
         if len(user_input) != 1:
-            print('Press a number to use a skill!')
+            print('\nPress a number to use a skill!')
             continue
 
         # Whatever number user presses will dynamically find the description for that move
         if user_input[0] in ['1', '2']:
             clear()
-            delay_print(hero.skills[int(user_input[0]) - 1]['description'])
-            print('\n')
-            skill_damage = hero.skills[int(user_input[0]) - 1]['dmg']
-            delay_print(f'{hero.name} did {skill_damage} damage!\n')
-            print('\n')
-            enemy.health -= skill_damage
-
+            if hero.skills[int(user_input[0]) - 1]['mp_cost'] <= hero.mp:
+                delay_print(hero.skills[int(user_input[0]) - 1]['description'])
+                print('\n')
+                skill_damage = hero.skills[int(user_input[0]) - 1]['dmg']
+                delay_print(f'{hero.name} did {skill_damage} damage!\n')
+                print('\n')
+                enemy.health -= skill_damage
+                hero.mp -= hero.skills[int(user_input[0]) - 1]['mp_cost']
+            else:
+                delay_print(
+                    'You dont have enough mp to use that skill!' + '\n')
+                continue
+        elif user_input[0] in ['back', 'b', '9']:
+            clear()
+            combat(hero, enemy)
         else:
-            delay_print('Press a number to use a skill!')
+            delay_print('Choose a number or type b, back, or 9 to go back!')
             continue
 
         if enemy.health <= 0:
@@ -106,7 +120,7 @@ def skills(hero, enemy):
 
         else:
             delay_print(
-                f'\n{enemy.name} attack {hero.name} for {enemy.attack} damage\n')
+                f'{enemy.name} attack {hero.name} for {enemy.attack} damage\n')
             hero.health -= enemy.attack
 
         if hero.health <= 0:
@@ -120,11 +134,11 @@ def combat(hero, enemy):
     combat_done = False
 
     while not combat_done:
-        delay_print(f'\n{hero.name} vs {enemy.name}\n')
+        combat_vs(hero, enemy)
         delay_print(
-            f'Zidane HP: {hero.health}     Normal Guard HP: {enemy.health}\n')
+            f'{hero.name} HP: {hero.health}     {enemy.name} HP: {enemy.health}\n')
         delay_print(
-            f'Zidane MP: {hero.mp}      Normal Guard MP: {enemy.mp}\n')
+            f'{hero.name} MP: {hero.mp}      {enemy.name} MP: {enemy.mp}\n')
         print("\n1. Attack")
         print("2. Skills")
         print("3. Items")
