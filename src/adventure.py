@@ -11,6 +11,7 @@ import random
 
 thief = heroes['thief']
 guard = normal_enemy['normal_guard']
+steiner = heroes['knight']
 
 
 # Used to show letter by letter in terminal
@@ -52,10 +53,11 @@ def combat_vs(hero, enemy):
 def win(hero, enemy):
     delay_print(f'\n{hero.name} won the battle against {enemy.name}!\n')
     delay_print(f'{hero.name} got {enemy.gold} gold!')
-    for x in enemy.items:
-        delay_print(f'\n{hero.name} obtained a {x.name}')
-    hero.gold += enemy.gold
-    hero.inventory.extend(enemy.items)
+    if hasattr(enemy, 'items'):
+        for x in enemy.items:
+            delay_print(f'\n{hero.name} obtained a {x.name}')
+        hero.gold += enemy.gold
+        hero.inventory.extend(enemy.items)
     input("\n> ").strip().lower().split()
 
 # lose screen
@@ -69,7 +71,7 @@ def lose():
 # If user chooses to attack
 
 
-def attack(hero, enemy, done):
+def attack(hero, enemy):
     clear()
     delay_print(
         f'{hero.name} attacks the {enemy.name} for {hero.attack} damage!\n')
@@ -77,7 +79,9 @@ def attack(hero, enemy, done):
 
     if enemy.health <= 0:
         win(hero, enemy)
-        opening()
+        # Using if statements to say where to go next since won't have random battles
+        if hero.curRoom == room['castleDoors']:
+            after_first_guard()
 
     else:
         delay_print(
@@ -129,11 +133,13 @@ def skills(hero, enemy):
             delay_print('Choose a number or type b, back, or 9 to go back!')
             continue
 
+        # won battle
         if enemy.health <= 0:
             win(hero, enemy)
             skill_done = True
-
-            opening()
+            # Using if statements to say where to go next since won't have random battles
+            if hero.curRoom == room['castleDoors']:
+                after_first_guard()
 
         else:
             delay_print(
@@ -170,7 +176,7 @@ def combat(hero, enemy):
             continue
 
         if user_input[0] == '1':
-            attack(hero, enemy, done=combat_done)
+            attack(hero, enemy)
 
         elif user_input[0] == '2':
             combat_done = True
@@ -180,12 +186,28 @@ def combat(hero, enemy):
             hero.use_item(hero)
 
 
+def after_first_guard():
+    clear()
+    done = False
+    while not done:
+        print('What the beep just happened to me?!?')
+        user_input = input("\n> ").strip().lower().split()
+        if len(user_input) != 1:
+            print('type one word gosh darnit!')
+            # done = True
+            # combat(thief, steiner)
+        elif user_input[0] == 'inven':
+            # done = True
+            clear()
+            thief.inven(thief)
+
+
 def opening():
     clear()
     done = False
 
+    print_location(thief)
     while not done:
-        print_location(thief)
 
         user_input = input("\n> ").strip().lower().split()
 
@@ -199,11 +221,6 @@ def opening():
         elif user_input[0] in ["n", "north", "s", "south", "w", "west", "e", "east"]:
             thief.curRoom = thief.tryDirection(user_input[0], thief.curRoom)
 
-        elif user_input[0] == 'inventory':
-            done = True
-            clear()
-            thief.inven(thief)
-
         elif user_input[0] == 'fight':
             done = True
             clear()
@@ -214,51 +231,54 @@ def opening():
 
 def opening_dialogue():
     clear()
-    done = False
+    # done = False
 
-    while not done:
-        print_location(thief)
-        print('============================================================================================')
-        delay_print(
-            f'\nWedge: Crap! Crap! There is a guard right there! There is no way we can kidnap the princess!\n')
-        delay_print(
-            f'\nZanbar: WEDGE if you dont stop this at once i will take out my dagger and end you myself!\n')
-        delay_print(
-            f'\n{thief.name}: Haha! Wedge there is no need to worry. Think about it. There are 3 of us and only one guard So what does that mean for us?\n')
-        delay_print(f'\nWedge: Oh god no! That means we are triple dead??\n')
-        delay_print(
-            f'\nZanbar: WEDGE you imbeccile. Taste the fury of my Dagger Of A Thousand Stabs!\n')
-        delay_print(f'\n{thief.name}: No need for that Zanbar. Wedge will grow out of it i assure you. For now follow my lead and trust me when I say this mission will be a success! Lets go take out that guard!\n')
+    # while not done:
+    # print_location(thief)
+    print('########################################')
+    print('      OUTSIDE OF ALEXANDRIA CASTLE     ')
+    print('########################################')
+    print('============================================================================================')
+    delay_print(
+        f'\nWedge: Crap! Crap! There is a guard right there blocking the entrance! There is no way we can kidnap the princess!\n')
+    delay_print(
+        f'\nZanbar: WEDGE if you dont stop this at once i will take out my dagger and end you myself!\n')
+    delay_print(
+        f'\n{thief.name}: Haha! Wedge there is no need to worry. Think about it. There are 3 of us and only one guard So what does that mean for us?\n')
+    delay_print(f'\nWedge: Oh god no! That means we are triple dead??\n')
+    delay_print(
+        f'\nZanbar: WEDGE you imbeccile. Taste the fury of my Dagger Of A Thousand Stabs!\n')
+    delay_print(f'\n{thief.name}: No need for that Zanbar. Wedge will grow out of it i assure you. For now follow my lead and trust me when I say this mission will be a success! Lets go take out that guard!\n')
 
-        done = True
+    # done = True
 
-        command = False
+    command = False
 
-        while not command:
+    while not command:
 
-            user_input = input("\n> ").strip().lower().split()
+        user_input = input("\n> ").strip().lower().split()
 
-            if len(user_input) != 1:
-                print('Lets go north to fight those guards! Type n or north!')
-                continue
+        if len(user_input) != 1:
+            print('Lets go north to fight those guards! Type n or north!')
+            continue
 
-            if user_input[0] == 'quit' or user_input[0] == 'q':
-                command = True
-            elif user_input[0] in ["n", "north"]:
-                thief.curRoom = thief.tryDirection(
-                    user_input[0], thief.curRoom)
-                command = True
-                clear()
-                opening()
+        if user_input[0] == 'quit' or user_input[0] == 'q':
+            command = True
+        elif user_input[0] in ["n", "north"]:
+            thief.curRoom = thief.tryDirection(
+                user_input[0], thief.curRoom)
+            command = True
+            clear()
+            opening()
 
-            else:
-                print('Lets go north to fight those guards! Type n or north!')
+        else:
+            print('Lets go north to fight those guards! Type n or north!')
 
 
 # Intro of game
 start = False
 while not start:
-    delay_print('\nWelcome you are playing as Zidane, part of a thieves guild. You are currently with two other members, Wedge and Zanbar, outside of the castle of Alexandria. You are on a dangerous mission...I wont spoil much more. Have fun! Press enter in the terminal to begin your adventure!')
+    delay_print('\nWelcome you are playing as Zidane, part of a thieves guild. You are currently with two other members, Wedge and Zanbar, outside of the castle of Alexandria. You are on a dangerous mission to kidnap the princess of Alexandria, Garnet. Have fun! Press enter in the terminal to begin your adventure!')
     user_input = input("\n> ").strip().lower().split()
-    start = True
+    # start = True
     opening_dialogue()

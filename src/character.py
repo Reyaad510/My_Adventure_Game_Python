@@ -91,7 +91,7 @@ class Hero(Character):
                     if len(user_input) != 1:
                         print('Type 1 or 2!')
                         self.inven(hero)
-
+                    # Equipping Weapon
                     elif user_input[0] in ['Yes', '1']:
                         hero.attack -= hero.weapon[0].attack
                         hero.inventory.append(hero.weapon[0])
@@ -143,8 +143,6 @@ class Hero(Character):
                         self.inven(hero)
                 # Using a healing item from inventory
                 elif hasattr(hero.inventory[int(user_input_one[0])-1], 'health'):
-                    print('Healing: ', hero.inventory[int(
-                        user_input_one[0])-1].health)
                     print('Want to use this to restore health?')
                     print('1. Yes')
                     print('2. No')
@@ -185,8 +183,6 @@ class Hero(Character):
 
                 # Using MP item from inventory
                 elif hasattr(hero.inventory[int(user_input_one[0])-1], 'mp'):
-                    print('MP: ', hero.inventory[int(
-                        user_input_one[0])-1].mp)
                     print('Want to use this to restore MP?')
                     print('1. Yes')
                     print('2. No')
@@ -225,7 +221,7 @@ class Hero(Character):
 
             elif user_input_one[0] == 'b':
                 print('Going back!')
-                # items = True
+                items = True
 
     # Code that allows user to use an item during combat)
 
@@ -262,8 +258,6 @@ class Hero(Character):
 
                 # Using a healing item from inventory
                 elif hasattr(hero.inventory[int(user_input_one[0])-1], 'health'):
-                    print('Healing: ', hero.inventory[int(
-                        user_input_one[0])-1].health)
                     print('Want to use this to restore health?')
                     print('1. Yes')
                     print('2. No')
@@ -304,8 +298,6 @@ class Hero(Character):
 
                 # Using MP item from inventory
                 elif hasattr(hero.inventory[int(user_input_one[0])-1], 'mp'):
-                    print('MP: ', hero.inventory[int(
-                        user_input_one[0])-1].mp)
                     print('Want to use this to restore MP?')
                     print('1. Yes')
                     print('2. No')
@@ -342,9 +334,10 @@ class Hero(Character):
                         os.system('clear')
                         self.use_item(hero)
 
-            elif user_input_one[0] == 'b':
-                print('Going back!')
-                items = True
+                elif user_input_one[0] == 'b':
+                    # print('Going back!')
+                    print(hero)
+                    print(items)
 
 
 class Villain(Character):

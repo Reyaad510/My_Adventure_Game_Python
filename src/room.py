@@ -27,10 +27,10 @@ room = {
 
 room['outside'].north_to = room['castleDoors']
 room['outside'].n_to = room['castleDoors']
-room['castleDoors'].n_to = room['castleFirsttFloor']
-room['castleDoors'].north_to = room['castleFirstFloor']
-room['castleDoors'].e_to = room['castleCourtYard']
-room['castleDoors'].east_to = room['castleCourtYard']
+# room['castleDoors'].n_to = room['castleFirsttFloor']
+# room['castleDoors'].north_to = room['castleFirstFloor']
+# room['castleDoors'].e_to = room['castleCourtYard']
+# room['castleDoors'].east_to = room['castleCourtYard']
 
 
 room['cfloor1'].south_to = room['outside']
