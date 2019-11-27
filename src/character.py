@@ -5,6 +5,7 @@ from item import knife
 import os
 
 
+# Base class for any character
 class Character:
     def __init__(self, name, description, maxhealth, health, attack, defense, mp, gold):
         self.name = name
@@ -19,6 +20,8 @@ class Character:
     def __str__(self):
         return f'{self.name}:{self.description}'
 
+# Hero Classes
+
 
 class Hero(Character):
     def __init__(self, name, description, maxhealth, health, attack, defense, mp, gold, skills, ultimate, weapon, startRoom=None, inventory=None):
@@ -32,6 +35,7 @@ class Hero(Character):
     def __str__(self):
         return f'{self.curRoom}'
 
+    # Code that links rooms together. Importing from room
     def tryDirection(self, d, curRoom):
         attrib = d + '_to'
 
@@ -42,6 +46,7 @@ class Hero(Character):
 
         return curRoom
 
+    # Code that allows user to equip a weapon so far(havent' implemented armor)
     def inven(self, hero):
         items = False
         while not items:
@@ -49,14 +54,16 @@ class Hero(Character):
                 print(f'\n{i+1}.', x.name)
             print(f'9. Back')
 
-            user_input = input("\n> ").strip().lower().split()
-            if user_input[0] == '1':
+            # Dynamically equips items
+            user_input_one = input("\n> ").strip().lower().split()
+            if user_input_one[0] in ['1', '2', '3', '4']:
                 os.system('cls')
                 os.system('clear')
                 items = True
-                print(hero.inventory[0].name)
-                print(hero.inventory[0].description)
-                print('Damage: ', hero.inventory[0].attack)
+                print(hero.inventory[int(user_input_one[0])-1].name)
+                print(hero.inventory[int(user_input_one[0]) - 1].description)
+                print('Damage: ', hero.inventory[int(
+                    user_input_one[0])-1].attack)
                 print('Want to equip this weapon?')
                 print('1. Yes')
                 print('2. No')
@@ -67,10 +74,11 @@ class Hero(Character):
                     hero.attack -= hero.weapon[0].attack
                     hero.inventory.append(hero.weapon[0])
                     hero.weapon.remove(hero.weapon[0])
-                    hero.weapon.append(hero.inventory[int(user_input[0]) - 1])
+                    hero.weapon.append(
+                        hero.inventory[int(user_input_one[0]) - 1])
                     hero.attack += hero.weapon[0].attack
                     hero.inventory.remove(
-                        hero.inventory[int(user_input[0]) - 1])
+                        hero.inventory[int(user_input_one[0]) - 1])
                     print('Equipped', hero.weapon[0].name)
                     print(hero.attack)
                     print('Inv 0', hero.inventory)
@@ -123,14 +131,3 @@ boss = {
 normal_enemy = {
     'normal_guard': NormalEnemy('Normal Guard', 'Just a normal guard of the queen. Nothing amazing here', 20, 20, 5, 8, 5, 100, [rusty_sword, knife])
 }
-
-
-# knight = Character(
-#     'Sir Steiner', 'Protector of the Queen Brahman and Princess Garnet of Alexandria, Sir Steiner has sworn his life to them.', 'SwordSlash')
-
-# mage = Character(
-#     'Vivi', 'A young mage that lives in Alexandria with his grandfather. He is humble, but his training in magic makes him a deadly opponent', 'Meteor')
-
-# thief = Character('Zidane', 'A smart mouth thief that has the duty of kidnapping Princess Garnet along with his crew of bandit. His wits and charm saves him in the most unexpected situations', 'Backstab')
-
-# villain = Character('Obelisk', 'A knight that used to protect Queen Brahman and went missing after a mission. He returned as a dark knight to destroy the Queen and all of Alexandria.', 'Dark Matter')

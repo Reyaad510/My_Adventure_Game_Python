@@ -38,11 +38,15 @@ def print_location(thief):
     print(('#' * (4 + len(thief.curRoom.name)) + '\n'))
     delay_print('\n -- ' + thief.curRoom.description + ' --\n')
 
+# This decorates the 'vs' with '=' when you get into a fight
+
 
 def combat_vs(hero, enemy):
     print(('=' * (4 + len(hero.name) + len(enemy.name))))
     print(f'{hero.name} vs {enemy.name}')
     print(('=' * (4 + len(hero.name) + len(enemy.name))))
+
+# win screen
 
 
 def win(hero, enemy):
@@ -54,11 +58,15 @@ def win(hero, enemy):
     hero.inventory.extend(enemy.items)
     input("\n> ").strip().lower().split()
 
+# lose screen
+
 
 def lose():
     delay_print("You died. Game over!")
     input("\n> ").strip().lower().split()
     sys.exit()
+
+# If user chooses to attack
 
 
 def attack(hero, enemy, done):
@@ -79,6 +87,8 @@ def attack(hero, enemy, done):
         lose()
     else:
         combat(hero, enemy)
+
+# If user chooses to use a skill
 
 
 def skills(hero, enemy):
@@ -133,6 +143,8 @@ def skills(hero, enemy):
             lose()
         else:
             combat(hero, enemy)
+
+# Fuction that loops during combat
 
 
 def combat(hero, enemy):
@@ -192,6 +204,8 @@ def opening():
             clear()
             combat(thief, guard)
 
+# Dialogue that occurs when starting the game
+
 
 def opening_dialogue():
     clear()
@@ -236,8 +250,8 @@ def opening_dialogue():
                 print('Lets go north to fight those guards! Type n or north!')
 
 
+# Intro of game
 start = False
-
 while not start:
     delay_print('\nWelcome you are playing as Zidane, part of a thieves guild. You are currently with two other members, Wedge and Zanbar, outside of the castle of Alexandria. You are on a dangerous mission...I wont spoil much more. Have fun! Press enter in the terminal to begin your adventure!')
     user_input = input("\n> ").strip().lower().split()
