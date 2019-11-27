@@ -13,7 +13,7 @@ class Room:
 room = {
     'outside':  Room("Outside of Alexandria Castle",
                      "North are the doors to the Castle protected by a guard."),
-    'castleDoors': Room("Caste Door", "At the caste door is one guard who is lazily standing there about to fall asleep. That is until he notices three figures moving towards him very fast"),
+    'castleDoors': Room("Caste Door", "At the castle door is one guard who is lazily standing there about to fall asleep...That is until he notices three figures moving towards him rapidly"),
 
     'cfloor1':    Room("Castle Main Floor", """Very vast and big area filled with a multitude of light flowing from lamps. """),
 

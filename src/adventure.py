@@ -1,3 +1,4 @@
+import item
 from character import heroes
 from character import boss
 from character import normal_enemy
@@ -44,8 +45,13 @@ def combat_vs(hero, enemy):
     print(('=' * (4 + len(hero.name) + len(enemy.name))))
 
 
-def win():
-    delay_print('\nYou won the battle!\n')
+def win(hero, enemy):
+    delay_print(f'\n{hero.name} won the battle against {enemy.name}!\n')
+    delay_print(f'{hero.name} got {enemy.gold} gold!')
+    for x in enemy.items:
+        delay_print(f'\n{hero.name} obtained a {x.name}')
+    hero.gold += enemy.gold
+    hero.inventory.extend(enemy.items)
     input("\n> ").strip().lower().split()
 
 
@@ -62,7 +68,7 @@ def attack(hero, enemy, done):
     enemy.health -= hero.attack
 
     if enemy.health <= 0:
-        win()
+        win(hero, enemy)
         opening()
 
     else:
@@ -82,7 +88,7 @@ def skills(hero, enemy):
     while not skill_done:
         delay_print('\nChoose a Skill: \n')
         for i, skill in enumerate(d for d in hero.skills):
-            print(i+1, skill['name'], '-', skill['mp_cost'], 'MP')
+            print(f'{i+1}.', skill['name'], '-', skill['mp_cost'], 'MP')
         delay_print(f'9. Back')
 
         user_input = input("\n> ").strip().lower().split()
@@ -114,7 +120,7 @@ def skills(hero, enemy):
             continue
 
         if enemy.health <= 0:
-            win()
+            win(hero, enemy)
             skill_done = True
             opening()
 
@@ -175,6 +181,11 @@ def opening():
 
         elif user_input[0] in ["n", "north", "s", "south", "w", "west", "e", "east"]:
             thief.curRoom = thief.tryDirection(user_input[0], thief.curRoom)
+
+        elif user_input[0] == 'inventory':
+            done = True
+            clear()
+            thief.inven(thief)
 
         elif user_input[0] == 'fight':
             done = True
