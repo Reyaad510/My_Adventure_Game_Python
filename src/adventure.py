@@ -132,6 +132,7 @@ def skills(hero, enemy):
         if enemy.health <= 0:
             win(hero, enemy)
             skill_done = True
+
             opening()
 
         else:
