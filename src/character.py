@@ -84,7 +84,14 @@ class Hero(Character):
                     print('Inv 0', hero.inventory)
                     self.inven(hero)
                 else:
-                    items = False
+                    os.system('cls')
+                    os.system('clear')
+                    self.inven(hero)
+
+            elif user_input_one[0] in ['9', 'Back']:
+                os.system('cls')
+                os.system('clear')
+                
 
 
 class Villain(Character):
