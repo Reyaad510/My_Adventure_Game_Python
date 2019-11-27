@@ -335,10 +335,9 @@ class Hero(Character):
                         os.system('clear')
                         self.use_item(hero)
 
-                elif user_input_one[0] == 'b':
-                    # print('Going back!')
-                    print(hero)
-                    print(items)
+            elif user_input_one[0] == 'b':
+                print('Going back!')
+                items = True
 
 
 class Villain(Character):
@@ -374,7 +373,7 @@ heroes = {
             'description': 'I charm them',
             'dmg': [150, 175],
             'mp_cost': 3
-         }], 'Backstab', [dagger], [headband], room['outside'], []),
+         }], 'Backstab', [dagger], [headband], room['outside'], [small_potion]),
 
     'healer': Hero('Garnet', 'The daughter of Queen Brahman, Garnet is the princess of Alexandria. She does not see eye to eye with her mother after her father passed after unusual circumstances and she wishes for more than anything to leave the life she has now for something more simple.', 100, 100, 10, 8, 25, 25, 25, ['Cure', 'Barrier'], 'Healing Wind', 'Royal Staff', 'Silky Dress')
 }

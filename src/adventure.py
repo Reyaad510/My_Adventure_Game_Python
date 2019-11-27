@@ -242,26 +242,22 @@ def opening():
 
 def opening_dialogue():
     clear()
-    # done = False
+    done = False
 
-    # while not done:
-    # print_location(thief)
-    # print('########################################')
-    # print('      OUTSIDE OF ALEXANDRIA CASTLE     ')
-    # print('########################################')
-    print('============================================================================================')
-    delay_print(
-        f'\nWedge: Crap! Crap! There is a guard right there blocking the entrance! There is no way we can kidnap the princess!\n')
-    delay_print(
-        f'\nZanbar: WEDGE if you dont stop this at once i will take out my dagger and end you myself!\n')
-    delay_print(
-        f'\n{thief.name}: Haha! Wedge there is no need to worry. Think about it. There are 3 of us and only one guard So what does that mean for us?\n')
-    delay_print(f'\nWedge: Oh god no! That means we are triple dead??\n')
-    delay_print(
-        f'\nZanbar: WEDGE you imbeccile. Taste the fury of my Dagger Of A Thousand Stabs!\n')
-    delay_print(f'\n{thief.name}: No need for that Zanbar. Wedge will grow out of it i assure you. For now follow my lead and trust me when I say this mission will be a success! Lets go take out that guard!\n')
+    while not done:
+        print_location(thief)
+        delay_print(
+            f'\nWedge: Crap! Crap! There is a guard right there blocking the entrance! There is no way we can kidnap the princess!\n')
+        delay_print(
+            f'\nZanbar: WEDGE if you dont stop this at once i will take out my dagger and end you myself!\n')
+        delay_print(
+            f'\n{thief.name}: Haha! Wedge there is no need to worry. Think about it. There are 3 of us and only one guard So what does that mean for us?\n')
+        delay_print(f'\nWedge: Oh god no! That means we are triple dead??\n')
+        delay_print(
+            f'\nZanbar: WEDGE you imbeccile. Taste the fury of my Dagger Of A Thousand Stabs!\n')
+        delay_print(f'\n{thief.name}: No need for that Zanbar. Wedge will grow out of it i assure you. For now follow my lead and trust me when I say this mission will be a success! Lets go take out that guard!\n')
 
-    # done = True
+        done = True
 
     command = False
 
