@@ -227,6 +227,125 @@ class Hero(Character):
                 print('Going back!')
                 # items = True
 
+    # Code that allows user to use an item during combat)
+
+    def use_item(self, hero):
+        items = False
+        while not items:
+            for i, x in enumerate(hero.inventory):
+                print(f'{i+1}.', x.name)
+            print(f'b. Back')
+
+            # Dynamically equips items
+            user_input_one = input("\n> ").strip().lower().split()
+            if len(user_input_one) != 1:
+                print('Try a different number or type b to go back!')
+                continue
+
+            elif user_input_one[0] in str(list(range(len(hero.inventory) + 1))):
+                os.system('cls')
+                os.system('clear')
+                items = True
+                print(hero.inventory[int(user_input_one[0])-1].name)
+                print(hero.inventory[int(user_input_one[0]) - 1].description)
+                # Can't select weapon
+                if hasattr(hero.inventory[int(user_input_one[0])-1], 'attack'):
+                    print(
+                        'There is no time to switch weapons during a fight! Choose an item instead!')
+                    self.use_item(hero)
+
+                # Can't select armor
+                elif hasattr(hero.inventory[int(user_input_one[0])-1], 'defense'):
+                    print(
+                        'There is no time to switch armor during a fight! Choose an item instead!')
+                    self.use_item(hero)
+
+                # Using a healing item from inventory
+                elif hasattr(hero.inventory[int(user_input_one[0])-1], 'health'):
+                    print('Healing: ', hero.inventory[int(
+                        user_input_one[0])-1].health)
+                    print('Want to use this to restore health?')
+                    print('1. Yes')
+                    print('2. No')
+                    print(f'Current Health: {hero.health}/{hero.maxhealth} ')
+                    user_input = input("\n> ").strip().lower().split()
+                    # If click enter with no text
+                    if len(user_input) != 1:
+                        print('Type 1 or 2!')
+                        self.use_item(hero)
+
+                    if user_input[0] in ['Yes', '1']:
+                        if(hero.health == hero.maxhealth):
+                            print(
+                                'You are already all full HP! No need to waste that!')
+                            self.use_item(hero)
+                        elif hero.health + hero.inventory[int(
+                                user_input_one[0])-1].health > hero.maxhealth:
+                            hero.health = hero.maxhealth
+                            hero.inventory.remove(
+                                hero.inventory[int(user_input_one[0]) - 1])
+                            print(
+                                f'Total Health: {hero.health}/{hero.maxhealth}')
+                            # print('Inv 0', hero.inventory)
+                            self.use_item(hero)
+                        else:
+                            hero.health += hero.inventory[int(
+                                user_input_one[0])-1].health
+                            hero.inventory.remove(
+                                hero.inventory[int(user_input_one[0]) - 1])
+                            print(
+                                f'Total Health:{hero.health}/{hero.maxhealth}')
+                            # print('Inv 0', hero.inventory)
+                            self.use_item(hero)
+                    else:
+                        os.system('cls')
+                        os.system('clear')
+                        self.use_item(hero)
+
+                # Using MP item from inventory
+                elif hasattr(hero.inventory[int(user_input_one[0])-1], 'mp'):
+                    print('MP: ', hero.inventory[int(
+                        user_input_one[0])-1].mp)
+                    print('Want to use this to restore MP?')
+                    print('1. Yes')
+                    print('2. No')
+                    print(f'Current MP: {hero.mp}/{hero.maxmp} ')
+                    user_input = input("\n> ").strip().lower().split()
+                    # If click enter with no text
+                    if len(user_input) != 1:
+                        print('Type 1 or 2!')
+                        self.use_item(hero)
+
+                    if user_input[0] in ['Yes', '1']:
+                        if(hero.mp == hero.maxmp):
+                            print(
+                                'You are already all full MP! No need to waste that!')
+                            self.use_item(hero)
+                        elif hero.mp + hero.inventory[int(
+                                user_input_one[0])-1].mp > hero.maxmp:
+                            hero.mp = hero.maxmp
+                            hero.inventory.remove(
+                                hero.inventory[int(user_input_one[0]) - 1])
+                            print(f'Total MP:{hero.mp}/{hero.maxmp}')
+                            # print('Inv 0', hero.inventory)
+                            self.use_item(hero)
+                        else:
+                            hero.mp += hero.inventory[int(
+                                user_input_one[0])-1].mp
+                            hero.inventory.remove(
+                                hero.inventory[int(user_input_one[0]) - 1])
+                            print(f'Total MP:{hero.mp}/{hero.maxmp}')
+                            # print('Inv 0', hero.inventory)
+                            self.use_item(hero)
+                    else:
+                        os.system('cls')
+                        os.system('clear')
+                        self.use_item(hero)
+
+            elif user_input_one[0] == 'b':
+                print('Going back!')
+                items = True
+
 
 class Villain(Character):
     def __init__(self, name, description, maxhealth, health, attack, defense, maxmp, mp, gold, skills, ultimate, laugh):

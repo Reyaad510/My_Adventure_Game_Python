@@ -145,6 +145,7 @@ def skills(hero, enemy):
         else:
             combat(hero, enemy)
 
+
 # Fuction that loops during combat
 
 
@@ -165,7 +166,7 @@ def combat(hero, enemy):
         user_input = input("\n> ").strip().lower().split()
 
         if len(user_input) != 1:
-            print('Press 1 or 2 to attack or us a skill!')
+            print('Enter 1, 2, or 3!')
             continue
 
         if user_input[0] == '1':
@@ -174,6 +175,9 @@ def combat(hero, enemy):
         elif user_input[0] == '2':
             combat_done = True
             skills(hero, enemy)
+
+        elif user_input[0] == '3':
+            hero.use_item(hero)
 
 
 def opening():
