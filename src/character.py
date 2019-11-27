@@ -363,7 +363,7 @@ heroes = {
     'mage': Hero(
         'Vivi', 'A young mage that lives in Alexandria with his grandfather. He is humble, but his training in magic makes him a deadly opponent', 100, 100, 10, 8, 20, 20, 25, ['Fire', 'Ice'], 'Meteor', 'Old Staff', 'Apprentice Robes'),
 
-    'thief': Hero('Zidane', 'A smart mouth thief that has the duty of kidnapping Princess Garnet along with his crew of bandit. His wits and charm saves him in the most unexpected situations', 100, 100, 10, 8, 15, 15, 25, [{
+    'thief': Hero('Zidane', 'A smart mouth thief that has the duty of kidnapping Princess Garnet along with his crew of bandit. His wits and charm saves him in the most unexpected situations', 100, 100, 8, 8, 15, 15, 25, [{
         'name': 'Sneak Attack',
         'description': 'I sneak behind and stab them to death',
         'dmg': 100,
@@ -384,5 +384,5 @@ boss = {
 }
 
 normal_enemy = {
-    'normal_guard': NormalEnemy('Normal Guard', 'Just a normal guard of the queen. Nothing amazing here', 20, 20, 5, 8, 5, 5, 100, [rusty_sword, knife, leather_shield, knight_shield, loaf_of_bread, small_potion, ether_stone, arcane_potion, blue_potion])
+    'normal_guard': NormalEnemy('Normal Guard', 'Just a normal guard of the queen. Nothing amazing here', 100, 20, 5, 3, 5, 5, 100, [rusty_sword, knife, leather_shield, knight_shield, loaf_of_bread, small_potion, ether_stone, arcane_potion, blue_potion])
 }

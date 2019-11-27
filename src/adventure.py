@@ -73,9 +73,11 @@ def lose():
 
 def attack(hero, enemy):
     clear()
+    h_attack = round(
+        (hero.attack * (random.randint(100, 125)/100)) - enemy.defense)
     delay_print(
-        f'{hero.name} attacks the {enemy.name} for {hero.attack} damage!\n')
-    enemy.health -= hero.attack
+        f'{hero.name} attacks the {enemy.name} for {h_attack} damage!\n')
+    enemy.health -= h_attack
 
     if enemy.health <= 0:
         win(hero, enemy)
@@ -235,9 +237,9 @@ def opening_dialogue():
 
     # while not done:
     # print_location(thief)
-    print('########################################')
-    print('      OUTSIDE OF ALEXANDRIA CASTLE     ')
-    print('########################################')
+    # print('########################################')
+    # print('      OUTSIDE OF ALEXANDRIA CASTLE     ')
+    # print('########################################')
     print('============================================================================================')
     delay_print(
         f'\nWedge: Crap! Crap! There is a guard right there blocking the entrance! There is no way we can kidnap the princess!\n')
