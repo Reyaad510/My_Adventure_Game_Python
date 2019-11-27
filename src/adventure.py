@@ -86,9 +86,11 @@ def attack(hero, enemy):
             after_first_guard()
 
     else:
+        e_attack = round(
+            (enemy.attack * (random.randint(100, 125)/100)) - hero.defense)
         delay_print(
-            f'\n{enemy.name} attack {hero.name} for {enemy.attack} damage\n')
-        hero.health -= enemy.attack
+            f'\n{enemy.name} attack {hero.name} for {e_attack} damage\n')
+        hero.health -= e_attack
     if hero.health <= 0:
         lose()
     else:
@@ -119,8 +121,13 @@ def skills(hero, enemy):
             if hero.skills[int(user_input[0]) - 1]['mp_cost'] <= hero.mp:
                 delay_print(hero.skills[int(user_input[0]) - 1]['description'])
                 print('\n')
-                skill_damage = hero.skills[int(user_input[0]) - 1]['dmg']
-                delay_print(f'{hero.name} did {skill_damage} damage!\n')
+
+                skill_damage = round((hero.attack * (random.randint(hero.skills[int(
+                    user_input[0]) - 1]['dmg'][0], hero.skills[int(user_input[0]) - 1]['dmg'][1])/100)) - enemy.defense)
+
+                delay_print(
+                    f'{hero.name} did {skill_damage} damage to {enemy.name}!\n')
+
                 print('\n')
                 enemy.health -= skill_damage
                 hero.mp -= hero.skills[int(user_input[0]) - 1]['mp_cost']
@@ -144,9 +151,11 @@ def skills(hero, enemy):
                 after_first_guard()
 
         else:
-            delay_print(
-                f'{enemy.name} attack {hero.name} for {enemy.attack} damage\n')
-            hero.health -= enemy.attack
+            e_attack = round(
+                (enemy.attack * (random.randint(100, 125)/100)) - hero.defense)
+        delay_print(
+            f'\n{enemy.name} attack {hero.name} for {e_attack} damage\n')
+        hero.health -= e_attack
 
         if hero.health <= 0:
             lose()

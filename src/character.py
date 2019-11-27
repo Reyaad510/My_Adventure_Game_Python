@@ -1,4 +1,5 @@
 from room import room
+import random
 from item import rusty_sword
 from item import dagger
 from item import knife
@@ -366,12 +367,12 @@ heroes = {
     'thief': Hero('Zidane', 'A smart mouth thief that has the duty of kidnapping Princess Garnet along with his crew of bandit. His wits and charm saves him in the most unexpected situations', 100, 100, 8, 8, 15, 15, 25, [{
         'name': 'Sneak Attack',
         'description': 'I sneak behind and stab them to death',
-        'dmg': 100,
+        'dmg': [200, 250],
         'mp_cost': 5
     },
         {'name': 'Charm Attack',
             'description': 'I charm them',
-            'dmg': 5,
+            'dmg': [150, 175],
             'mp_cost': 3
          }], 'Backstab', [dagger], [headband], room['outside'], []),
 
@@ -384,5 +385,5 @@ boss = {
 }
 
 normal_enemy = {
-    'normal_guard': NormalEnemy('Normal Guard', 'Just a normal guard of the queen. Nothing amazing here', 100, 20, 5, 3, 5, 5, 100, [rusty_sword, knife, leather_shield, knight_shield, loaf_of_bread, small_potion, ether_stone, arcane_potion, blue_potion])
+    'normal_guard': NormalEnemy('Normal Guard', 'Just a normal guard of the queen. Nothing amazing here', 100, 100, 10, 3, 5, 5, 100, [rusty_sword, knife, leather_shield, knight_shield, loaf_of_bread, small_potion, ether_stone, arcane_potion, blue_potion])
 }
