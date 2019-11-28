@@ -20,7 +20,15 @@ def delay_print(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        # time.sleep(0.04)
+        time.sleep(0.04)
+        # time.sleep(0.01)
+
+
+def delay_print_fast(s):
+    for c in s:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(0.02)
         # time.sleep(0.01)
 
 # Clearing the user terminal
@@ -76,7 +84,7 @@ def attack(hero, enemy):
     clear()
     h_attack = round(
         (hero.attack * (random.randint(100, 125)/100)) - enemy.defense)
-    delay_print(
+    delay_print_fast(
         f'{hero.name} attacked the {enemy.name} for {h_attack} damage!\n')
     enemy.health -= h_attack
     count += 1
@@ -91,7 +99,7 @@ def attack(hero, enemy):
     else:
         e_attack = round(
             (enemy.attack * (random.randint(100, 125)/100)) - hero.defense)
-        delay_print(
+        delay_print_fast(
             f'\n{enemy.name} attacked {hero.name} for {e_attack} damage\n')
         hero.health -= e_attack
         count += 1
@@ -110,10 +118,10 @@ def skills(hero, enemy):
     clear()
 
     while not skill_done:
-        delay_print('\nChoose a Skill: \n')
+        delay_print_fast('\nChoose a Skill: \n')
         for i, skill in enumerate(d for d in hero.skills):
             print(f'{i+1}.', skill['name'], '-', skill['mp_cost'], 'MP')
-        delay_print(f'\nb. back')
+        delay_print_fast(f'\nb. back')
 
         user_input = input("\n> ").strip().lower().split()
 
@@ -125,13 +133,14 @@ def skills(hero, enemy):
         if user_input[0] in ['1', '2']:
             clear()
             if hero.skills[int(user_input[0]) - 1]['mp_cost'] <= hero.mp:
-                delay_print(hero.skills[int(user_input[0]) - 1]['description'])
+                delay_print_fast(
+                    hero.skills[int(user_input[0]) - 1]['description'])
                 print('\n')
 
                 skill_damage = round((hero.attack * (random.randint(hero.skills[int(
                     user_input[0]) - 1]['dmg'][0], hero.skills[int(user_input[0]) - 1]['dmg'][1])/100)) - enemy.defense)
 
-                delay_print(
+                delay_print_fast(
                     f'{hero.name} did {skill_damage} damage to {enemy.name}!')
 
                 enemy.health -= skill_damage
@@ -140,14 +149,15 @@ def skills(hero, enemy):
                 count = 0
                 hero.mp -= hero.skills[int(user_input[0]) - 1]['mp_cost']
             else:
-                delay_print(
+                delay_print_fast(
                     'You dont have enough mp to use that skill!' + '\n')
                 continue
         elif user_input[0] in ['back', 'b']:
             clear()
             combat(hero, enemy)
         else:
-            delay_print('Choose a number or type b, back, or 9 to go back!')
+            delay_print_fast(
+                'Choose a number or type b, back, or 9 to go back!')
             continue
 
         # won battle
@@ -161,7 +171,7 @@ def skills(hero, enemy):
         else:
             e_attack = round(
                 (enemy.attack * (random.randint(100, 125)/100)) - hero.defense)
-        delay_print(
+        delay_print_fast(
             f'\n{enemy.name} attacked {hero.name} for {e_attack} damage\n')
         hero.health -= e_attack
         count += 1
@@ -182,10 +192,10 @@ def ulitmate(hero, enemy):
 
     while not ulti_done:
 
-        delay_print('\nChoose A Limit Break: \n')
+        delay_print_fast('\nChoose A Limit Break: \n')
         for i, ulti in enumerate(d for d in hero.ultimate):
             print(f'{i+1}.', ulti['name'])
-        delay_print(f'\nb. back')
+        delay_print_fast(f'\nb. back')
 
         user_input = input("\n> ").strip().lower().split()
 
@@ -196,13 +206,14 @@ def ulitmate(hero, enemy):
         # Whatever number user presses will dynamically find the description for that move
         if user_input[0] in ['1', 'one']:
             clear()
-            delay_print(hero.ultimate[int(user_input[0]) - 1]['description'])
+            delay_print_fast(
+                hero.ultimate[int(user_input[0]) - 1]['description'])
 
             ulti_damage = round((hero.attack * (random.randint(hero.ultimate[int(
                 user_input[0]) - 1]['dmg'][0], hero.ultimate[int(user_input[0]) - 1]['dmg'][1])/100)) - enemy.defense)
 
-            delay_print(
-                f'{hero.name} did {ulti_damage} damage to {enemy.name}!')
+            delay_print_fast(
+                f'\n{hero.name} did {ulti_damage} damage to {enemy.name}!')
 
             enemy.health -= ulti_damage
             # Resetting ulti counter
@@ -211,7 +222,8 @@ def ulitmate(hero, enemy):
             clear()
             combat(hero, enemy)
         else:
-            delay_print('Choose a number or type b, back, or 9 to go back!')
+            delay_print_fast(
+                'Choose a number or type b, back, or 9 to go back!')
             continue
 
         # won battle
@@ -225,7 +237,7 @@ def ulitmate(hero, enemy):
         else:
             e_attack = round(
                 (enemy.attack * (random.randint(100, 125)/100)) - hero.defense)
-        delay_print(
+        delay_print_fast(
             f'\n{enemy.name} attacked {hero.name} for {e_attack} damage\n')
         hero.health -= e_attack
 
@@ -242,9 +254,9 @@ def combat(hero, enemy):
 
     while not combat_done:
         combat_vs(hero, enemy)
-        delay_print(
+        delay_print_fast(
             f'{hero.name} HP: {hero.health}     {enemy.name} HP: {enemy.health}\n')
-        delay_print(
+        delay_print_fast(
             f'{hero.name} MP: {hero.mp}      {enemy.name} MP: {enemy.mp}\n')
         print("\n1. Attack")
         print("2. Skills")
@@ -290,27 +302,28 @@ def after_first_guard(hero):
 
 def opening():
     clear()
-    done = False
+    # done = False
 
     print_location(thief)
-    while not done:
+    # while not done:
+    delay_print(
+        f'\n Lazy Guard: HALT! You three! State your names right now and tell my why you are running so hurriedly to the castle?\n')
+    delay_print(
+        f'\n Zidane: Salutations my friend! We are merchants from Artherian. We were traveling here and we have wares that Queen Brahman and Princess Garnet would absolutely fall in love with! \n')
+    delay_print(f'\n Lazy Guard: Merchants you say...I see, I see. The Princess has been down lately after her father passing, I am sure she would be delighted with gifts from another land. \n')
+    delay_print(
+        f'\n Zidane: I am sorry to hear that...such a sad occasion. I am glad we could help. Why dont you lead the way my good sir?  \n')
+    delay_print(f'\n Lazy Guard: Right you are. By the way, believe it or not, I dont get called "sir" that often. Feels quite nice. Follow me! To the Queen we go. \n')
+    delay_print(f'\n Wedge: Woohoo! I cant believe we fooled the guard! \n')
+    delay_print(f'\n Lazy Guard: Wait!! Why...you scoundrels!! \n')
+    delay_print(f'\n Zanbar: WEDGE! YOU IMBECCILEEEE! \n')
+    delay_print(f'\n Wedge: Ahhhhhhh! Im sorry! Forgive me!! \n')
+    delay_print(f'\n Zidane: Calm yourself you two! This is no time for bickering! Prepare yourselves!! Lets make this quick and stay focused on the mission! \n')
 
-        user_input = input("\n> ").strip().lower().split()
-
-        if len(user_input) != 1:
-            print('I dont understand that. Type n,s,w, or e')
-            continue
-
-        if user_input[0] == 'quit' or user_input[0] == 'q':
-            done = True
-
-        elif user_input[0] in ["n", "north", "s", "south", "w", "west", "e", "east"]:
-            thief.curRoom = thief.tryDirection(user_input[0], thief.curRoom)
-
-        elif user_input[0] == 'fight':
-            done = True
-            clear()
-            combat(thief, guard)
+    input("\n> ").strip().lower().split()
+    # done = True
+    clear()
+    combat(thief, guard)
 
 # Dialogue that occurs when starting the game
 
@@ -319,8 +332,8 @@ def opening_dialogue():
     clear()
     done = False
 
+    print_location(thief)
     while not done:
-        print_location(thief)
         delay_print(
             f'\nWedge: Crap! Crap! There is a guard right there blocking the entrance! There is no way we can kidnap the princess!\n')
         delay_print(
@@ -330,7 +343,8 @@ def opening_dialogue():
         delay_print(f'\nWedge: Oh god no! That means we are triple dead??\n')
         delay_print(
             f'\nZanbar: WEDGE you imbeccile. Taste the fury of my Dagger Of A Thousand Stabs!\n')
-        delay_print(f'\n{thief.name}: No need for that Zanbar. Wedge will grow out of it i assure you. For now follow my lead and trust me when I say this mission will be a success! Lets go take out that guard!\n')
+        delay_print(f'\n{thief.name}: No need for that Zanbar. Wedge will grow out of it i assure you. For now follow my lead and trust me when I say this mission will be a success! Lets head north to the guard. Follow my lead!\n')
+        delay_print(f'\nIn this game you will be able to choose directions to go in the terminal by typing the direction. For now we can only go north to the guard. Type n or north and continue forth!\n')
 
         done = True
 
