@@ -20,16 +20,16 @@ def delay_print(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        # time.sleep(0.04)
-        time.sleep(0.01)
+        time.sleep(0.04)
+        # time.sleep(0.01)
 
 
 def delay_print_fast(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        # time.sleep(0.02)
-        time.sleep(0.01)
+        time.sleep(0.02)
+        # time.sleep(0.01)
 
 # Clearing the user terminal
 
@@ -302,7 +302,7 @@ def after_first_guard(hero):
         user_input = input("\n> ").strip().lower().split()
 
         if len(user_input) != 1:
-            print('There is no time! Lets go north into the castle doors')
+            print('There is no time! Lets go north through the castle doors!')
             continue
 
         if user_input[0] == 'quit' or user_input[0] == 'q':
@@ -314,7 +314,7 @@ def after_first_guard(hero):
             clear()
             print_location(hero)
             delay_print(
-                f'\n The three hurry along into the castle main floor. It was gorgeously decorated with red and purple carpets and a chandelier that hung in the middle of the room about 30 feet high. There were two staircases on the left and ride sides of the room that led to the second story. There is a door to the east and west that leads to rooms. Up the stairs leads to the second floor and the Princess Room. With the festival going on in the town the castle was near deserted, except for a few who had to guard the Princess.\n')
+                f'\n The three hurry along into the castle main floor. It is gorgeously decorated with red and purple carpets and a chandelier hangs in the middle of the room about 30 feet high. There are two staircases on the left and ride sides of the room that lead to the second floor. There is a door to the east and west that leads to other rooms. Up the stairs leads to the second floor and the Princess Room. With the festival going on in the town the castle floor is currently empty.\n')
             delay_print(
                 f'\n Wedge: Wooahhhhh!! This place is beautiful! Also, Zidane you beat that guard to a pulp. I promise i was helping! How cool was it that I tricked him with the chocolate guys!?\n')
             delay_print(
@@ -341,13 +341,13 @@ def after_first_guard(hero):
 
                 user_input = input("\n> ").strip().lower().split()
                 if len(user_input) != 1:
-                    print('There is no time! Lets go north into the castle doors')
+                    print('Code upcoming in the future :)')
                     continue
                 else:
-                    print('Code upcoming in new release! :)')
+                    print('Code upcoming in the future! :)')
 
         else:
-            print('Code upcoming in new release!')
+            print('Code upcoming in the future!')
 
 
 def opening():
@@ -386,7 +386,7 @@ def opening():
     delay_print(
         f'\n Zanbar: WEDGE! YOU IMBECCILEEEE! DONT YOU KNOW TO KEEP YOUR FAT MOUTH SHUT! \n')
     delay_print(f'\n Wedge: AHHHHHH! Im sorry! Forgive me!! \n')
-    delay_print(f'\n Zidane: Calm yourself you two! This is no time for bickering! Prepare yourselves!! Lets make this quick and stay focused on the mission! \n')
+    delay_print(f'\n Zidane: Calm yourself you two! This is no time for bickering! Prepare yourselves for battle!! Lets make this quick and stay focused on the mission! \n')
 
     input("\n> ").strip().lower().split()
     # done = True
@@ -408,7 +408,7 @@ def opening_dialogue():
         delay_print(
             f'\nZanbar: WEDGE if you dont stop this at once i will take out my dagger and end you myself!\n')
         delay_print(
-            f'\n{thief.name}: Haha! Wedge there is no need to worry. Think about it. There are 3 of us and only one guard So what does that mean for us?\n')
+            f'\n{thief.name}: Haha! Wedge there is no need to worry. Think about it. There are three of us and only one guard So what does that mean for us?\n')
         delay_print(f'\nWedge: Oh god no! That means we are triple dead??\n')
         delay_print(
             f'\nZanbar: WEDGE you imbeccile. Taste the fury of my Dagger Of A Thousand Stabs!\n')
