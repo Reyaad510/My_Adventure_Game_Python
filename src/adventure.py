@@ -72,25 +72,30 @@ def lose():
 
 
 def attack(hero, enemy):
+    count = 0
     clear()
     h_attack = round(
         (hero.attack * (random.randint(100, 125)/100)) - enemy.defense)
     delay_print(
-        f'{hero.name} attacks the {enemy.name} for {h_attack} damage!\n')
+        f'{hero.name} attacked the {enemy.name} for {h_attack} damage!\n')
     enemy.health -= h_attack
-
+    count += 1
+    hero.ultimate_counter(hero, count)
+    count = 0
     if enemy.health <= 0:
         win(hero, enemy)
         # Using if statements to say where to go next since won't have random battles
         if hero.curRoom == room['castleDoors']:
-            after_first_guard()
+            after_first_guard(hero)
 
     else:
         e_attack = round(
             (enemy.attack * (random.randint(100, 125)/100)) - hero.defense)
         delay_print(
-            f'\n{enemy.name} attack {hero.name} for {e_attack} damage\n')
+            f'\n{enemy.name} attacked {hero.name} for {e_attack} damage\n')
         hero.health -= e_attack
+        count += 1
+        hero.ultimate_counter(hero, count)
     if hero.health <= 0:
         lose()
     else:
@@ -100,14 +105,15 @@ def attack(hero, enemy):
 
 
 def skills(hero, enemy):
-
+    count = 0
     skill_done = False
+    clear()
 
     while not skill_done:
         delay_print('\nChoose a Skill: \n')
         for i, skill in enumerate(d for d in hero.skills):
             print(f'{i+1}.', skill['name'], '-', skill['mp_cost'], 'MP')
-        delay_print(f'9. Back')
+        delay_print(f'\nb. back')
 
         user_input = input("\n> ").strip().lower().split()
 
@@ -126,16 +132,18 @@ def skills(hero, enemy):
                     user_input[0]) - 1]['dmg'][0], hero.skills[int(user_input[0]) - 1]['dmg'][1])/100)) - enemy.defense)
 
                 delay_print(
-                    f'{hero.name} did {skill_damage} damage to {enemy.name}!\n')
+                    f'{hero.name} did {skill_damage} damage to {enemy.name}!')
 
-                print('\n')
                 enemy.health -= skill_damage
+                count += 2
+                hero.ultimate_counter(hero, count)
+                count = 0
                 hero.mp -= hero.skills[int(user_input[0]) - 1]['mp_cost']
             else:
                 delay_print(
                     'You dont have enough mp to use that skill!' + '\n')
                 continue
-        elif user_input[0] in ['back', 'b', '9']:
+        elif user_input[0] in ['back', 'b']:
             clear()
             combat(hero, enemy)
         else:
@@ -148,13 +156,77 @@ def skills(hero, enemy):
             skill_done = True
             # Using if statements to say where to go next since won't have random battles
             if hero.curRoom == room['castleDoors']:
-                after_first_guard()
+                after_first_guard(hero)
 
         else:
             e_attack = round(
                 (enemy.attack * (random.randint(100, 125)/100)) - hero.defense)
         delay_print(
-            f'\n{enemy.name} attack {hero.name} for {e_attack} damage\n')
+            f'\n{enemy.name} attacked {hero.name} for {e_attack} damage\n')
+        hero.health -= e_attack
+        count += 1
+        hero.ultimate_counter(hero, count)
+
+        if hero.health <= 0:
+            lose()
+        else:
+            skill_done = True
+            combat(hero, enemy)
+
+# Using ultimate
+
+
+def ulitmate(hero, enemy):
+    clear()
+    ulti_done = False
+
+    while not ulti_done:
+
+        delay_print('\nChoose A Limit Break: \n')
+        for i, ulti in enumerate(d for d in hero.ultimate):
+            print(f'{i+1}.', ulti['name'])
+        delay_print(f'\nb. back')
+
+        user_input = input("\n> ").strip().lower().split()
+
+        if len(user_input) != 1:
+            print('\nPress a number to use a Limit Break!')
+            continue
+
+        # Whatever number user presses will dynamically find the description for that move
+        if user_input[0] in ['1', 'one']:
+            clear()
+            delay_print(hero.ultimate[int(user_input[0]) - 1]['description'])
+
+            ulti_damage = round((hero.attack * (random.randint(hero.ultimate[int(
+                user_input[0]) - 1]['dmg'][0], hero.ultimate[int(user_input[0]) - 1]['dmg'][1])/100)) - enemy.defense)
+
+            delay_print(
+                f'{hero.name} did {ulti_damage} damage to {enemy.name}!')
+
+            enemy.health -= ulti_damage
+            # Resetting ulti counter
+            hero.ulti_counter = 0
+        elif user_input[0] in ['back', 'b', '9']:
+            clear()
+            combat(hero, enemy)
+        else:
+            delay_print('Choose a number or type b, back, or 9 to go back!')
+            continue
+
+        # won battle
+        if enemy.health <= 0:
+            win(hero, enemy)
+            ulti_done = True
+            # Using if statements to say where to go next since won't have random battles
+            if hero.curRoom == room['castleDoors']:
+                after_first_guard(hero)
+
+        else:
+            e_attack = round(
+                (enemy.attack * (random.randint(100, 125)/100)) - hero.defense)
+        delay_print(
+            f'\n{enemy.name} attacked {hero.name} for {e_attack} damage\n')
         hero.health -= e_attack
 
         if hero.health <= 0:
@@ -162,12 +234,10 @@ def skills(hero, enemy):
         else:
             combat(hero, enemy)
 
-
 # Fuction that loops during combat
 
 
 def combat(hero, enemy):
-
     combat_done = False
 
     while not combat_done:
@@ -179,6 +249,8 @@ def combat(hero, enemy):
         print("\n1. Attack")
         print("2. Skills")
         print("3. Items")
+        if hero.ulti_counter >= 10:
+            print("4. Limit Break")
 
         user_input = input("\n> ").strip().lower().split()
 
@@ -196,8 +268,11 @@ def combat(hero, enemy):
         elif user_input[0] == '3':
             hero.use_item(hero)
 
+        elif user_input[0] == '4' and hero.ulti_counter >= 10:
+            ulitmate(hero, enemy)
 
-def after_first_guard():
+
+def after_first_guard(hero):
     clear()
     done = False
     while not done:
@@ -210,7 +285,7 @@ def after_first_guard():
         elif user_input[0] == 'inven':
             # done = True
             clear()
-            thief.inven(thief)
+            hero.inven(thief)
 
 
 def opening():

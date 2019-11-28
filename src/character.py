@@ -34,11 +34,12 @@ class Character:
 
 
 class Hero(Character):
-    def __init__(self, name, description, maxhealth, health, attack, defense, maxmp, mp, gold, skills, ultimate, weapon, armor, startRoom=None, inventory=None):
+    def __init__(self, name, description, maxhealth, health, attack, defense, maxmp, mp, gold, skills, ultimate, ulti_counter, weapon, armor, startRoom=None, inventory=None):
         super().__init__(name, description, maxhealth,
                          health, attack, defense, maxmp, mp, gold)
         self.skills = skills
         self.ultimate = ultimate
+        self.ulti_counter = ulti_counter
         self.weapon = weapon
         self.armor = armor
         self.curRoom = startRoom
@@ -224,6 +225,11 @@ class Hero(Character):
                 print('Going back!')
                 items = True
 
+    def ultimate_counter(self, hero, num):
+        counter = hero.ulti_counter
+        counter += num
+        hero.ulti_counter = counter
+
     # Code that allows user to use an item during combat)
 
     def use_item(self, hero):
@@ -358,24 +364,28 @@ class NormalEnemy(Character):
 
 heroes = {
     'knight': Hero(
-        'Sir Steiner', 'Protector of the Queen Brahman and Princess Garnet of Alexandria, Sir Steiner has sworn his life to them.', 100, 100, 10, 8, 12, 12, 25, ['SwordSlash', 'FireStrike'], 'Knights of The Round Table', 'Bronze Sword', 'Knight Armor'),
+        'Sir Steiner', 'Protector of the Queen Brahman and Princess Garnet of Alexandria, Sir Steiner has sworn his life to them.', 100, 100, 10, 8, 12, 12, 25, ['SwordSlash', 'FireStrike'], 'Knights of The Round Table', 0, 'Bronze Sword', 'Knight Armor'),
 
     'mage': Hero(
-        'Vivi', 'A young mage that lives in Alexandria with his grandfather. He is humble, but his training in magic makes him a deadly opponent', 100, 100, 10, 8, 20, 20, 25, ['Fire', 'Ice'], 'Meteor', 'Old Staff', 'Apprentice Robes'),
+        'Vivi', 'A young mage that lives in Alexandria with his grandfather. He is humble, but his training in magic makes him a deadly opponent', 100, 100, 10, 8, 20, 20, 25, ['Fire', 'Ice'], 'Meteor', 0, 'Old Staff', 'Apprentice Robes'),
 
     'thief': Hero('Zidane', 'A smart mouth thief that has the duty of kidnapping Princess Garnet along with his crew of bandit. His wits and charm saves him in the most unexpected situations', 100, 100, 8, 8, 15, 15, 25, [{
         'name': 'Sneak Attack',
-        'description': 'I sneak behind and stab them to death',
+        'description': 'While the others disctract the enemy, Zidane flanks them from the side with a surprise attack!',
         'dmg': [200, 250],
         'mp_cost': 5
     },
-        {'name': 'Charm Attack',
-            'description': 'I charm them',
+        {'name': 'Charmer',
+            'description': 'Using his wits and ability to converse with people. Zidane makes the enemy feel comfortable around him.',
             'dmg': [150, 175],
             'mp_cost': 3
-         }], 'Backstab', [dagger], [headband], room['outside'], [small_potion]),
+         }],
+        [{
+            'name': 'BackStab',
+            'description': 'A fatal blow to the back of the enemys back. Hurt as much as a betrayal from someone you thought was a true friend.',
+            'dmg': [300, 400]}], 0, [dagger], [headband], room['outside'], [small_potion]),
 
-    'healer': Hero('Garnet', 'The daughter of Queen Brahman, Garnet is the princess of Alexandria. She does not see eye to eye with her mother after her father passed after unusual circumstances and she wishes for more than anything to leave the life she has now for something more simple.', 100, 100, 10, 8, 25, 25, 25, ['Cure', 'Barrier'], 'Healing Wind', 'Royal Staff', 'Silky Dress')
+    'healer': Hero('Garnet', 'The daughter of Queen Brahman, Garnet is the princess of Alexandria. She does not see eye to eye with her mother after her father passed after unusual circumstances and she wishes for more than anything to leave the life she has now for something more simple.', 100, 100, 10, 8, 25, 25, 25, ['Cure', 'Barrier'], 'Healing Wind', 0, 'Royal Staff', 'Silky Dress')
 }
 boss = {
     'obelisk': Villain('Obelisk', 'A royal knight that protects Queen Brahman and Princess Garnet. Ever since the infamous Battle of Alexandria, his armor was stained with the blood of many civilians. He is known as the Blood Knight to everyone in the city', 100,  100, 10, 8, 20, 20, 25, ['Sanguine Strike', 'No Mercy'], 'Blood Explosion', 'HMPH!'),
