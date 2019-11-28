@@ -394,7 +394,7 @@ boss = {
 }
 
 normal_enemy = {
-    'normal_guard': NormalEnemy('Lazy Guard', 'Just a normal guard of the queen. Nothing amazing here', 20, 20, 10, 3, 5, 5, 10, [rusty_sword])
+    'normal_guard': NormalEnemy('Dumb Guard', 'Just a normal guard of the queen. Nothing amazing here', 20, 20, 10, 3, 5, 5, 10, [rusty_sword])
 }
 
 # [rusty_sword, knife, leather_shield, knight_shield, loaf_of_bread, small_potion, ether_stone, arcane_potion, blue_potion]

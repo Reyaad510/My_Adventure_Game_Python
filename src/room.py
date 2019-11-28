@@ -12,8 +12,8 @@ class Room:
 
 room = {
     'outside':  Room("Outside of Alexandria Castle",
-                     "North are the doors to the Castle protected by a guard."),
-    'castleDoors': Room("Caste Door", "At the castle door is one guard who is lazily standing there about to fall asleep...That is until he notices three figures moving towards him rapidly"),
+                     "North are the doors to the Alexandrian Castle protected by a single guard."),
+    'castleDoors': Room("Castle Door", "At the castle door is one guard who is lazily standing there about to fall asleep...That is until he notices three figures moving towards him rapidly"),
 
     'cfloor1':    Room("Castle Main Floor", """Very vast and big area filled with a multitude of light flowing from lamps. """),
 
@@ -27,8 +27,8 @@ room = {
 
 room['outside'].north_to = room['castleDoors']
 room['outside'].n_to = room['castleDoors']
-# room['castleDoors'].n_to = room['castleFirsttFloor']
-# room['castleDoors'].north_to = room['castleFirstFloor']
+room['castleDoors'].n_to = room['cfloor1']
+room['castleDoors'].north_to = room['cfloor1']
 # room['castleDoors'].e_to = room['castleCourtYard']
 # room['castleDoors'].east_to = room['castleCourtYard']
 

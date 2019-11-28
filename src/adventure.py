@@ -20,16 +20,16 @@ def delay_print(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        time.sleep(0.04)
-        # time.sleep(0.01)
+        # time.sleep(0.04)
+        time.sleep(0.01)
 
 
 def delay_print_fast(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        time.sleep(0.02)
-        # time.sleep(0.01)
+        # time.sleep(0.02)
+        time.sleep(0.01)
 
 # Clearing the user terminal
 
@@ -41,11 +41,14 @@ def clear():
 # Prints the player location and description of room
 
 
-def print_location(thief):
-    print('\n' + ('#' * (4 + len(thief.curRoom.name))))
-    print('# ' + thief.curRoom.name.upper() + ' #')
-    print(('#' * (4 + len(thief.curRoom.name)) + '\n'))
-    delay_print('\n -- ' + thief.curRoom.description + ' --\n')
+def print_location(hero):
+    print('\n' + ('#' * (4 + len(hero.curRoom.name))))
+    print('# ' + hero.curRoom.name.upper() + ' #')
+    print(('#' * (4 + len(hero.curRoom.name)) + '\n'))
+
+
+def print_location_description(hero):
+    delay_print('\n -- ' + hero.curRoom.description + ' --\n')
 
 # This decorates the 'vs' with '=' when you get into a fight
 
@@ -286,18 +289,65 @@ def combat(hero, enemy):
 
 def after_first_guard(hero):
     clear()
-    done = False
-    while not done:
-        print('What the beep just happened to me?!?')
+    print_location(hero)
+
+    delay_print(
+        f'\n Dumb Guard: I...will....get you scoun...drels...uhh\n')
+    delay_print(
+        f'\n Zidane: Looks like he is knocked out cold. Wedge and Zanbar lets hurry north through the castle doors. Lets go!\n')
+
+    command = False
+    while not command:
+
         user_input = input("\n> ").strip().lower().split()
+
         if len(user_input) != 1:
-            print('type one word gosh darnit!')
-            # done = True
-            # combat(thief, steiner)
-        elif user_input[0] == 'inven':
-            # done = True
+            print('There is no time! Lets go north into the castle doors')
+            continue
+
+        if user_input[0] == 'quit' or user_input[0] == 'q':
+            command = True
+        elif user_input[0] in ["n", "north"]:
+            thief.curRoom = thief.tryDirection(
+                user_input[0], thief.curRoom)
+            command = True
             clear()
-            hero.inven(thief)
+            print_location(hero)
+            delay_print(
+                f'\n The three hurry along into the castle main floor. It was gorgeously decorated with red and purple carpets and a chandelier that hung in the middle of the room about 30 feet high. There were two staircases on the left and ride sides of the room that led to the second story. There is a door to the east and west that leads to rooms. Up the stairs leads to the second floor and the Princess Room. With the festival going on in the town the castle was near deserted, except for a few who had to guard the Princess.\n')
+            delay_print(
+                f'\n Wedge: Wooahhhhh!! This place is beautiful! Also, Zidane you beat that guard to a pulp. I promise i was helping! How cool was it that I tricked him with the chocolate guys!?\n')
+            delay_print(
+                f'\n Zanbar: ARGGG...WHY YOU IDIOT. THIS ISNT FUN AND PLAY. WE ARE ON A VERY DANGEROUS SERIOUS MISSION! AND THIS IS THE ONLY TIME WE WILL BE ABLE TO GET THE PRINCESS WITHOUT THERE BEING NUMEROUS KNIGHTS HERE!  \n')
+            delay_print(
+                f'\n Wedge: Hey I said im sorry rude butt. Plus, the Royal Guards are with Queen Brahman at the fesitval. We only have to deal with these easy guards.\n')
+            delay_print(
+                f'\n Zanbar: Really? Seemed like you were crying just seeing one guard in front of the castle doors. And if you call me that again i promise in my family name i will stab you with my dagger imbecille. \n')
+            delay_print(
+                f'\n Zidane: Zanbar and Wedge! Stop this now! The Royal Guards may be protecting the Queen but there are still tough guards and knights here with the Princess. We need to stay on our guard. \n')
+            delay_print(
+                f'\n Zidane: Do you hear that? \n')
+            delay_print(
+                f'\n Zanbar: Up the stairs. They are coming from up there. Thats where the Princess has to be. What do we do Zidane? \n')
+            delay_print(
+                f'\n Wedge: Oh nooooo...we have to leave or else we will die!  \n')
+            delay_print(
+                f'\n Zanbar: You stupid imbec... \n')
+            delay_print(
+                f'\n Zidane: Hurry, follow me! \n')
+
+            done = False
+            while not done:
+
+                user_input = input("\n> ").strip().lower().split()
+                if len(user_input) != 1:
+                    print('There is no time! Lets go north into the castle doors')
+                    continue
+                else:
+                    print('Code upcoming in new release! :)')
+
+        else:
+            print('Code upcoming in new release!')
 
 
 def opening():
@@ -305,19 +355,37 @@ def opening():
     # done = False
 
     print_location(thief)
+    print_location_description
     # while not done:
     delay_print(
-        f'\n Lazy Guard: HALT! You three! State your names right now and tell my why you are running so hurriedly to the castle?\n')
+        f'\n Dumb Guard: HALT! You three! State your names right now and tell my why you are running so hurriedly to the castle?\n')
     delay_print(
         f'\n Zidane: Salutations my friend! We are merchants from Artherian. We were traveling here and we have wares that Queen Brahman and Princess Garnet would absolutely fall in love with! \n')
-    delay_print(f'\n Lazy Guard: Merchants you say...I see, I see. The Princess has been down lately after her father passing, I am sure she would be delighted with gifts from another land. \n')
+    delay_print(f'\n Dumb Guard: Merchants you say...I see, I see. The Princess has been down lately after her father passing, I am sure she would be delighted with gifts from another land. \n')
     delay_print(
-        f'\n Zidane: I am sorry to hear that...such a sad occasion. I am glad we could help. Why dont you lead the way my good sir?  \n')
-    delay_print(f'\n Lazy Guard: Right you are. By the way, believe it or not, I dont get called "sir" that often. Feels quite nice. Follow me! To the Queen we go. \n')
-    delay_print(f'\n Wedge: Woohoo! I cant believe we fooled the guard! \n')
-    delay_print(f'\n Lazy Guard: Wait!! Why...you scoundrels!! \n')
-    delay_print(f'\n Zanbar: WEDGE! YOU IMBECCILEEEE! \n')
-    delay_print(f'\n Wedge: Ahhhhhhh! Im sorry! Forgive me!! \n')
+        f'\n Zidane: I am sorry to hear that...such a sad occasion. I do hope that we can help and lift up their spirits in such a time.  \n')
+    delay_print(f'\n Dumb Guard: No need to worry but I do appreciate your kind gestures. Unforntuately, the Queen is out for our yearly Alexandrian celebration in the city. The Princess is here though since she decided not to go...actually I dont think I should even be telling you this information in the first place. For all I know you three could be thieves. Plus, where exactly is all of your merchandise? You all look empty handed. \n')
+    delay_print(
+        f'\n Wedge: Ohh...haha...thieves? Us? What? Umm...umm..we arent empty handed just uhh... *sweat pouring down*  \n')
+    delay_print(
+        f'\n *Wedge reaches into his pocket and pulls out a melted chocolate bar*  \n')
+    delay_print(
+        f'\n Wedge: See...haha...this is Atherian finest chocolate...\n')
+    delay_print(
+        f'\n Wedge: *The guard stares at the chocolated with the most puzzled face and then proceeded to grab the chocolate*  \n')
+    delay_print(
+        f'\n Dumb Guard: .......Wow this is amazing! I have never seen chocolate like this in my entire life here in the castle. What a masterpiece of the Atherian people indeed.  \n')
+    delay_print(f'\n *As Wedge went from being nervous to start smiling and laughing with Zidane and the guard, Zanbar was absolutely dumbfounded at how much of an idiot this guard is and how much of an idiot Wedge is for doing that.* \n')
+    delay_print(f'\n Dumb Guard: AHAHA! You all seem trustworthy. I will take you to the Princess. She will be delighted to see what you all have brought.  \n')
+    delay_print(
+        f'\n Zidane: Thank you my good sir. Anything to help the Princess in her time of need. \n')
+    delay_print(
+        f'\n Dumb Guard: Right you are. Follow me! To the Princess we go. \n')
+    delay_print(f'\n Wedge: Woohoo! I cant believe we fooled him guys! \n')
+    delay_print(f'\n Dumb Guard: Wait...!! Why...you...you scoundrels!! \n')
+    delay_print(
+        f'\n Zanbar: WEDGE! YOU IMBECCILEEEE! DONT YOU KNOW TO KEEP YOUR FAT MOUTH SHUT! \n')
+    delay_print(f'\n Wedge: AHHHHHH! Im sorry! Forgive me!! \n')
     delay_print(f'\n Zidane: Calm yourself you two! This is no time for bickering! Prepare yourselves!! Lets make this quick and stay focused on the mission! \n')
 
     input("\n> ").strip().lower().split()
@@ -333,6 +401,7 @@ def opening_dialogue():
     done = False
 
     print_location(thief)
+    print_location_description(thief)
     while not done:
         delay_print(
             f'\nWedge: Crap! Crap! There is a guard right there blocking the entrance! There is no way we can kidnap the princess!\n')
