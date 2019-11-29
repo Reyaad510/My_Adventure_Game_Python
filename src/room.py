@@ -1,4 +1,5 @@
 from item import loaf_of_bread
+from item import leather_shield
 
 
 class Room:
@@ -22,7 +23,7 @@ room = {
 
     'cfloor1e':    Room("Castle Dining Hall", "Dining Hall.", loaf_of_bread),
 
-    'cfloor1w':    Room("Castle Armory", "Armory", loaf_of_bread),
+    'cfloor1w':    Room("Castle Armory", "Armory", leather_shield),
 
     'cfloor2': Room("Castle Second Floor", "Second floor bustling with multiple rooms. North is the throne room", loaf_of_bread),
 

@@ -59,7 +59,11 @@ class Hero(Character):
 
         return curRoom
 
+    def examine(self, hero):
+        print(hero.curRoom.item)
+
     # Code that allows user to equip a weapon so far(havent' implemented armor)
+
     def inven(self, hero):
         items = False
         while not items:

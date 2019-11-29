@@ -337,8 +337,6 @@ def after_first_guard(hero):
             delay_print(
                 f'\n Zidane: Hurry, follow me! \n')
             delay_print(
-                f'\n "Hide". Hide behind the staircase \n')
-            delay_print(
                 f'\n "East". Run into the room to the east. \n')
             delay_print(
                 f'\n "West". Run into the room to the west. \n')
@@ -349,13 +347,10 @@ def after_first_guard(hero):
                 user_input = input("\n> ").strip().lower().split()
                 if len(user_input) != 1:
                     print(
-                        'This isnt the time! Type the word "Hide", "East", or "West"!')
+                        'This isnt the time! Type the word "East", or "West"!')
                     continue
                 if user_input[0] == 'quit' or user_input[0] == 'q':
                     done = True
-
-                elif user_input[0] in ['1', 'Hide']:
-                    narratives.hide()
 
                 elif user_input[0] in ["e", "east"]:
                     thief.curRoom = thief.tryDirection(
