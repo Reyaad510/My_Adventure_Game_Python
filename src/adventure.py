@@ -1,4 +1,5 @@
 import item
+import narratives
 from character import heroes
 from character import boss
 from character import normal_enemy
@@ -20,7 +21,7 @@ def delay_print(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        time.sleep(0.04)
+        # time.sleep(0.04)
         # time.sleep(0.01)
 
 
@@ -28,7 +29,7 @@ def delay_print_fast(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        time.sleep(0.02)
+        # time.sleep(0.02)
         # time.sleep(0.01)
 
 # Clearing the user terminal
@@ -314,7 +315,7 @@ def after_first_guard(hero):
             clear()
             print_location(hero)
             delay_print(
-                f'\n The three hurry along into the castle main floor. It is gorgeously decorated with red and purple carpets and a chandelier hangs in the middle of the room about 30 feet high. There are two staircases on the left and ride sides of the room that lead to the second floor. There is a door to the east and west that leads to other rooms. Up the stairs leads to the second floor and the Princess Room. With the festival going on in the town the castle floor is currently empty.\n')
+                f'\n The three hurry along into the castle main floor. It is gorgeously decorated with red and purple carpets and a chandelier hangs in the middle of the room about 30 feet high. There is one staircase that leads to the second floor. There is a door to the east and west that leads to other rooms. With the festival going on in the town the castle floor is currently empty.\n')
             delay_print(
                 f'\n Wedge: Wooahhhhh!! This place is beautiful! Also, Zidane you beat that guard to a pulp. I promise i was helping! How cool was it that I tricked him with the chocolate guys!?\n')
             delay_print(
@@ -335,19 +336,43 @@ def after_first_guard(hero):
                 f'\n Zanbar: You stupid imbec... \n')
             delay_print(
                 f'\n Zidane: Hurry, follow me! \n')
+            delay_print(
+                f'\n "Hide". Hide behind the staircase \n')
+            delay_print(
+                f'\n "East". Run into the room to the east. \n')
+            delay_print(
+                f'\n "West". Run into the room to the west. \n')
 
             done = False
             while not done:
 
                 user_input = input("\n> ").strip().lower().split()
                 if len(user_input) != 1:
-                    print('Code upcoming in the future :)')
+                    print(
+                        'This isnt the time! Type the word "Hide", "East", or "West"!')
                     continue
-                else:
-                    print('Code upcoming in the future! :)')
+                if user_input[0] == 'quit' or user_input[0] == 'q':
+                    done = True
+
+                elif user_input[0] in ['1', 'Hide']:
+                    narratives.hide()
+
+                elif user_input[0] in ["e", "east"]:
+                    thief.curRoom = thief.tryDirection(
+                        user_input[0], thief.curRoom)
+                    done = True
+                    clear()
+                    narratives.c_east()
+
+                elif user_input[0] in ["w", "west"]:
+                    thief.curRoom = thief.tryDirection(
+                        user_input[0], thief.curRoom)
+                    done = True
+                    clear()
+                    narratives.c_west()
 
         else:
-            print('Code upcoming in the future!')
+            print('Lets go north to fight those guards! Type n or north!')
 
 
 def opening():
