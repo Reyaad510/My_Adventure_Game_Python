@@ -21,7 +21,7 @@ def delay_print(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        # time.sleep(0.04)
+        time.sleep(0.04)
         # time.sleep(0.01)
 
 
@@ -29,7 +29,7 @@ def delay_print_fast(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        # time.sleep(0.02)
+        time.sleep(0.02)
         # time.sleep(0.01)
 
 # Clearing the user terminal
